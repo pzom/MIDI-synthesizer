@@ -2,6 +2,7 @@ import mido
 import numpy as np
 import sounddevice as sd
 import threading
+from PySide6 import QtCore, QtWidgets, QtGui
 # Globals and Constants
 sample_rate = 44100.0
 active_notes = {}
@@ -28,9 +29,10 @@ def audio_callback(outdata, frames, time, status):
 
 def main():
     input_ports = mido.get_input_names()
-    target_port_name = input_ports[1]  
+    target_port_name = input_ports[0]  
 
     try:
+        start_app()
         with sd.OutputStream(samplerate=sample_rate, channels=1, callback=audio_callback):
             with mido.open_input(target_port_name) as in_port:
                 for msg in in_port:
@@ -46,4 +48,21 @@ def main():
 
     except KeyboardInterrupt:
         print("Exiting...")
+
+
+
+def sample_widget():
+    widget = QtWidgets.QWidget()
+    widget.layout = QtWidgets.QVBoxLayout(widget)
+    widget.layout.addWidget(QtWidgets.QLabel("Hello World", alignment=QtCore.Qt.AlignCenter))
+    return widget
+
+def start_app():
+    app = QtWidgets.QApplication([])
+    widget = sample_widget()
+    widget.resize(800,600)
+    widget.show()
+    app.exec()
+    
+
 main()
