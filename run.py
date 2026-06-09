@@ -1,5 +1,5 @@
 import sys
-from main import *
+from core.main import main
 
 if len(sys.argv) > 1:
     debug_arg = sys.argv[1]
