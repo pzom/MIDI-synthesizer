@@ -1,5 +1,4 @@
-import tkinter as tk
-from tkinter import ttk
+from core import *
 
 root = tk.Tk()
 root.title("Hello World")
